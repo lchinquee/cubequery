@@ -27,14 +27,12 @@ const LoginForm = () => {
     }
 
     try {
-      const { response } = await loginUser({
+      const { data } = await loginUser({
         variables: { ...userFormData }
       });
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
-      Auth.login(response.login.token);
+      Auth.login(data.login.token);
+      
     } catch (err) {
       console.error(err);
       setShowAlert(true);
@@ -84,6 +82,7 @@ const LoginForm = () => {
           variant='success'>
           Submit
         </Button>
+        {error && <div>Login failed</div>}
       </Form>
     </>
   );
